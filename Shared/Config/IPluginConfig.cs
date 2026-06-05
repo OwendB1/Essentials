@@ -4,11 +4,24 @@ namespace Shared.Config;
 
 public interface IPluginConfig : INotifyPropertyChanged
 {
-    // Enables the plugin
     bool Enabled { get; set; }
-
-    // Enables checking for changes in patched game code (disable this on Proton/Linux)
     bool DetectCodeChanges { get; set; }
 
-    // TODO: Add config properties here, then extend the implementing classes accordingly, also add UI to ConfigView.xaml
+    string Motd { get; set; }
+    string NewUserMotd { get; set; }
+    string MotdUrl { get; set; }
+    bool NewUserMotdUrl { get; set; }
+    bool StopShipsOnStart { get; set; }
+    bool UtilityShowPosition { get; set; }
+    bool MarkerShowPosition { get; set; }
+    int BackpackLimit { get; set; }
+    bool CutGameTags { get; set; }
+    bool UseBlockLimitsPlugin { get; set; }
+    int ShipFixerCooldownInSeconds { get; set; }
+    int ShipFixerConfirmationInSeconds { get; set; }
+    bool ShipFixerRemoveBlueprintsFromProjectors { get; set; }
+    bool ShipFixerPlayerCommandEnabled { get; set; }
+    bool ShipFixerFactionEnabled { get; set; }
+    bool ShipFixerEjectPlayers { get; set; }
+    bool ShipFixerInParallel { get; set; }
 }

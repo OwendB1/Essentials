@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using HarmonyLib;
+using PluginSdk.Commands;
+using ServerPlugin.Commands;
 using Shared.Config;
 using Shared.Logging;
 using Shared.Patches;
@@ -45,6 +48,23 @@ public class Plugin : IPlugin, ICommonPlugin
 
         var gameVersion = MyFinalBuildConstants.APP_VERSION_STRING.ToString();
         Common.SetPlugin(this, gameVersion, MyFileSystem.UserDataPath);
+
+        ServerCommands.Register(
+            Assembly.GetExecutingAssembly(),
+            typeof(BlocksModule),
+            typeof(EconModule),
+            typeof(PcuCheckModule),
+            typeof(TransferCommand),
+            typeof(ForceTransferCommand),
+            typeof(TransferPcuCommand),
+            typeof(ForceTransferPcuCommand),
+            typeof(TransferOwnerCommand),
+            typeof(TransferNobodyCommand),
+            typeof(TransferPcuNobodyCommand),
+            typeof(TransferOwnerNobodyCommand),
+            typeof(FixShipCommand),
+            typeof(FixShipModCommand),
+            typeof(FixShipModIdCommand));
 
         if (!PatchHelpers.HarmonyPatchAll(Log, new Harmony(Name)))
         {
