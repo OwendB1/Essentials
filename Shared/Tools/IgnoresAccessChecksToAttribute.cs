@@ -7,7 +7,7 @@ namespace System.Runtime.CompilerServices;
     
 /* Uncomment to enable publicizer support
  
-// This code is required in "production" when Pulsar builds the plugin
+// This code is required in production when the plugin is built by a remote loader.
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
 public sealed class IgnoresAccessChecksToAttribute : Attribute
 {

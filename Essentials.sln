@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		README.md = README.md
 		AGENTS.md = AGENTS.md
-		EssentialsClient.xml = EssentialsClient.xml
 		EssentialsServer.xml = EssentialsServer.xml
 		LICENSE = LICENSE
 	EndProjectSection
