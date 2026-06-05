@@ -8,10 +8,10 @@
     <RepoId>todo-github-user/project-name</RepoId>
 
     <!-- The name of your plugin that will appear in the plugin list -->
-    <FriendlyName>TODO EssentialsServer</FriendlyName>
+    <FriendlyName>Essentials</FriendlyName>
 
     <!-- The author name that you want to appear in the plugin list -->
-    <Author>TODO Author Name</Author>
+    <Author>OwendB1</Author>
 
     <!-- Optional tooltip for the plugin in the plugin list -->
     <Tooltip>TODO Short description</Tooltip>
