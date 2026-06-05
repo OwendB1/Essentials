@@ -22,7 +22,7 @@ Essentials is a Space Engineers dedicated server plugin for Magnetar.
 
 - `ServerPlugin` contains the Magnetar plugin entry point and deployment scripts.
 - `Shared` contains common plugin code, configuration, logging, and Harmony patches.
-- `EssentialsServer.xml` is the MagnetarHub plugin registration template.
+- `Essentials.xml` is the MagnetarHub plugin registration template.
 
 ## Configuration
 

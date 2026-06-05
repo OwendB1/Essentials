@@ -5,24 +5,19 @@
     <Id>DF09925B-6D53-41F2-899C-CA6214B5DD6F</Id>
 
     <!-- GitHub repository ID -->
-    <RepoId>todo-github-user/project-name</RepoId>
+    <RepoId>OwendB1/essentials</RepoId>
 
     <!-- The name of your plugin that will appear in the plugin list -->
     <FriendlyName>Essentials</FriendlyName>
 
     <!-- The author name that you want to appear in the plugin list -->
-    <Author>OwendB1</Author>
+    <Author>OwendB</Author>
 
     <!-- Optional tooltip for the plugin in the plugin list -->
-    <Tooltip>TODO Short description</Tooltip>
+    <Tooltip>Quality-of-life essentials for Magnetar dedicated servers.</Tooltip>
 
     <!-- Optional plugin description. If omitted, this will be the same as the Tooltip. 1000 characters max. -->
-    <Description>TODO Long description, multiple lines.
-
-        This text is shown on the plugin details panel in a scrollable text box.
-
-        You can use links here, players can click on them. For example, add a Discord invite.
-    </Description>
+    <Description>Essentials is a Magnetar server plugin for Space Engineers dedicated servers. It bundles common quality-of-life server behaviour configured through the Magnetar PluginSdk, with the config UI rendered by Quasar from the generated schema. Harmony patches are guarded with the EnsureCode attribute so they fail safe when Space Engineers ships an update that changes patched methods.</Description>
 
     <!-- Only source code in the Directory entries listed in SourceDirectories is compiled. Exclude any test projects or similar. -->
     <SourceDirectories>
