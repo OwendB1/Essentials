@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientPlugin", "ClientPlugin\ClientPlugin.csproj", "{DF09925B-6D53-41F2-899C-CA6214B5DD6F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerPlugin", "ServerPlugin\ServerPlugin.csproj", "{CF20B6F9-EE43-43C3-BFE0-58B001A3632C}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{C9DDBB22-47D4-40F4-85B6-76AD85ED3AFD}"
@@ -22,12 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF09925B-6D53-41F2-899C-CA6214B5DD6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF09925B-6D53-41F2-899C-CA6214B5DD6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF09925B-6D53-41F2-899C-CA6214B5DD6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF09925B-6D53-41F2-899C-CA6214B5DD6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF09925B-6D53-41F2-899C-CA6214B5DD6F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{DF09925B-6D53-41F2-899C-CA6214B5DD6F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{CF20B6F9-EE43-43C3-BFE0-58B001A3632C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CF20B6F9-EE43-43C3-BFE0-58B001A3632C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF20B6F9-EE43-43C3-BFE0-58B001A3632C}.Release|Any CPU.ActiveCfg = Release|Any CPU
