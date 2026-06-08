@@ -38,3 +38,6 @@ Set `SE_PLUGIN_DISABLE_METHOD_VERIFICATION` to any value on the server host to d
 ## Publishing
 
 Register server plugins in [MagnetarHub](https://github.com/viktor-ferenczi/MagnetarHub), so they become available in Magnetar.
+
+Functionality is inspired by and reimplements the original Torch plugin
+Essentials by TorchAPI: https://github.com/TorchAPI/Essentials
