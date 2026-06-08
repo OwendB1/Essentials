@@ -8,10 +8,9 @@ using Sandbox.Game.Entities.Cube;
 
 namespace ServerPlugin.Commands;
 
-[CommandRoot("blocks", "Blocks", "Block administration commands")]
-public sealed class BlocksModule : CommandModule
+public sealed partial class EssentialsModule
 {
-    [Command("on type", "Turn on all blocks of the given type.")]
+    [Command("blocks on type", "Turn on all blocks of the given type.")]
     public void OnType(string type)
     {
         int count = 0;
@@ -28,7 +27,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Enabled {count} blocks of type {type}.");
     }
 
-    [Command("on subtype", "Turn on all blocks of the given subtype.")]
+    [Command("blocks on subtype", "Turn on all blocks of the given subtype.")]
     public void OnSubtype(string subtype)
     {
         int count = 0;
@@ -45,7 +44,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Enabled {count} blocks of subtype {subtype}.");
     }
 
-    [Command("off type", "Turn off all blocks of the given type.")]
+    [Command("blocks off type", "Turn off all blocks of the given type.")]
     public void OffType(string type)
     {
         int count = 0;
@@ -62,7 +61,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Disabled {count} blocks of type {type}.");
     }
 
-    [Command("off subtype", "Turn off all blocks of the given subtype.")]
+    [Command("blocks off subtype", "Turn off all blocks of the given subtype.")]
     public void OffSubtype(string subtype)
     {
         int count = 0;
@@ -79,7 +78,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Disabled {count} blocks of subtype {subtype}.");
     }
 
-    [Command("remove subtype", "Remove all blocks of the given subtype.")]
+    [Command("blocks remove subtype", "Remove all blocks of the given subtype.")]
     public void RemoveSubtype(string subtype)
     {
         List<MySlimBlock> toRemove = Blocks()
@@ -92,7 +91,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Removed {toRemove.Count} blocks of subtype {subtype}.");
     }
 
-    [Command("remove type", "Remove all blocks of the given type.")]
+    [Command("blocks remove type", "Remove all blocks of the given type.")]
     public void RemoveType(string type)
     {
         List<MySlimBlock> toRemove = Blocks()
@@ -105,7 +104,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Removed {toRemove.Count} blocks of type {type}.");
     }
 
-    [Command("on general", "Turn on all blocks of the specified category.")]
+    [Command("blocks on general", "Turn on all blocks of the specified category.")]
     public void OnGeneral(BlockCategory category)
     {
         int count = 0;
@@ -118,7 +117,7 @@ public sealed class BlocksModule : CommandModule
         Context.Respond($"Enabled {count} {category} blocks.");
     }
 
-    [Command("off general", "Turn off all blocks of the specified category.")]
+    [Command("blocks off general", "Turn off all blocks of the specified category.")]
     public void OffGeneral(BlockCategory category)
     {
         int count = 0;

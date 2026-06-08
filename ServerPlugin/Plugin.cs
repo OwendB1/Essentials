@@ -51,20 +51,7 @@ public class Plugin : IPlugin, ICommonPlugin
 
         ServerCommands.Register(
             Assembly.GetExecutingAssembly(),
-            typeof(BlocksModule),
-            typeof(EconModule),
-            typeof(PcuCheckModule),
-            typeof(TransferCommand),
-            typeof(ForceTransferCommand),
-            typeof(TransferPcuCommand),
-            typeof(ForceTransferPcuCommand),
-            typeof(TransferOwnerCommand),
-            typeof(TransferNobodyCommand),
-            typeof(TransferPcuNobodyCommand),
-            typeof(TransferOwnerNobodyCommand),
-            typeof(FixShipCommand),
-            typeof(FixShipModCommand),
-            typeof(FixShipModIdCommand));
+            typeof(EssentialsModule));
 
         if (!PatchHelpers.HarmonyPatchAll(Log, new Harmony(Name)))
         {

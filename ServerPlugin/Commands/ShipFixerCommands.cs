@@ -9,13 +9,13 @@ using VRage.Game.ModAPI;
 
 namespace ServerPlugin.Commands;
 
-public abstract class ShipFixerCommandBase : CommandModule
+public sealed partial class EssentialsModule
 {
     private static readonly Dictionary<string, DateTime> CommandCooldowns = new Dictionary<string, DateTime>();
-    private static readonly Dictionary<string, DateTime> Confirmations = new Dictionary<string, DateTime>();
-    private static readonly ShipFixerCore Core = new ShipFixerCore();
+    private static readonly Dictionary<string, DateTime> ShipFixerConfirmations = new Dictionary<string, DateTime>();
+    private static readonly ShipFixerCore ShipFixerCoreInstance = new ShipFixerCore();
 
-    protected void FixShipPlayer(string gridName = null)
+    private void FixShipPlayer(string gridName = null)
     {
         if (!Plugin.Instance.Config.ShipFixerPlayerCommandEnabled)
         {
@@ -25,7 +25,7 @@ public abstract class ShipFixerCommandBase : CommandModule
 
         if (Context.Caller.IsConsole || Context.Caller.IdentityId == 0)
         {
-            Context.Respond("Console has no Grids so cannot use this command. Use !fixshipmod <Gridname> instead!");
+            Context.Respond("Console has no Grids so cannot use this command. Use !ess fixshipmod <Gridname> instead!");
             return;
         }
 
@@ -36,7 +36,7 @@ public abstract class ShipFixerCommandBase : CommandModule
             return;
         }
 
-        if (!CheckCommandCooldown(PlayerKey(), out int remainingSeconds))
+        if (!CheckCommandCooldown(ShipFixerPlayerKey(), out int remainingSeconds))
         {
             Plugin.Instance.Log.Info($"Cooldown for Player {player.DisplayName} still running! {remainingSeconds} seconds remaining!");
             Context.Respond($"Command is still on cooldown for {remainingSeconds} seconds.");
@@ -57,21 +57,21 @@ public abstract class ShipFixerCommandBase : CommandModule
             gridName = "nogrid";
         }
 
-        if (!CheckConfirmation(PlayerKey(), playerId, gridName, character, 0))
+        if (!CheckConfirmation(ShipFixerPlayerKey(), playerId, gridName, character, 0))
             return;
 
         try
         {
             ShipFixerResult result = character != null
-                ? Core.FixShip(character, playerId)
-                : Core.FixShip(playerId, gridName);
+                ? ShipFixerCoreInstance.FixShip(character, playerId)
+                : ShipFixerCoreInstance.FixShip(playerId, gridName);
 
             WriteResponse(result);
 
             if (result == ShipFixerResult.ShipFixed)
             {
                 Plugin.Instance.Log.Info($"Cooldown for Player {player.DisplayName} started!");
-                StartCommandCooldown(PlayerKey());
+                StartCommandCooldown(ShipFixerPlayerKey());
             }
         }
         catch (Exception ex)
@@ -81,7 +81,7 @@ public abstract class ShipFixerCommandBase : CommandModule
         }
     }
 
-    protected void FixShipModeratorByLookOrName(string gridName = null)
+    private void FixShipModeratorByLookOrName(string gridName = null)
     {
         if (!string.IsNullOrWhiteSpace(gridName))
         {
@@ -91,7 +91,7 @@ public abstract class ShipFixerCommandBase : CommandModule
 
         if (Context.Caller.IsConsole)
         {
-            Context.Respond("Console has no Character so cannot use this command. Use !fixshipmod <Gridname> instead!");
+            Context.Respond("Console has no Character so cannot use this command. Use !ess fixshipmod <Gridname> instead!");
             return;
         }
 
@@ -102,12 +102,12 @@ public abstract class ShipFixerCommandBase : CommandModule
             return;
         }
 
-        if (!CheckConfirmation(PlayerKey(), 0, "nogrid", character, 0))
+        if (!CheckConfirmation(ShipFixerPlayerKey(), 0, "nogrid", character, 0))
             return;
 
         try
         {
-            WriteResponse(Core.FixShip(character, 0));
+            WriteResponse(ShipFixerCoreInstance.FixShip(character, 0));
         }
         catch (Exception ex)
         {
@@ -116,20 +116,20 @@ public abstract class ShipFixerCommandBase : CommandModule
         }
     }
 
-    protected void FixShipModeratorById(long gridId)
+    private void FixShipModeratorById(long gridId)
     {
         if (gridId == 0)
         {
-            Context.Respond("Correct Usage is !fixshipmodid EntityID");
+            Context.Respond("Correct Usage is !ess fixshipmodid EntityID");
             return;
         }
 
-        if (!CheckConfirmation(PlayerKey(), 0, "nogrid", null, gridId))
+        if (!CheckConfirmation(ShipFixerPlayerKey(), 0, "nogrid", null, gridId))
             return;
 
         try
         {
-            WriteResponse(Core.FixShip(0, gridId));
+            WriteResponse(ShipFixerCoreInstance.FixShip(0, gridId));
         }
         catch (Exception ex)
         {
@@ -140,12 +140,12 @@ public abstract class ShipFixerCommandBase : CommandModule
 
     private void FixShipModeratorByName(string gridName)
     {
-        if (!CheckConfirmation(PlayerKey(), 0, gridName, null, 0))
+        if (!CheckConfirmation(ShipFixerPlayerKey(), 0, gridName, null, 0))
             return;
 
         try
         {
-            WriteResponse(Core.FixShip(0, gridName));
+            WriteResponse(ShipFixerCoreInstance.FixShip(0, gridName));
         }
         catch (Exception ex)
         {
@@ -159,9 +159,9 @@ public abstract class ShipFixerCommandBase : CommandModule
         string confirmationKey = $"{callerKey}:{gridName}:{id}:{playerId}";
         DateTime now = DateTime.UtcNow;
 
-        if (Confirmations.TryGetValue(confirmationKey, out DateTime expiresAt) && expiresAt >= now)
+        if (ShipFixerConfirmations.TryGetValue(confirmationKey, out DateTime expiresAt) && expiresAt >= now)
         {
-            Confirmations.Remove(confirmationKey);
+            ShipFixerConfirmations.Remove(confirmationKey);
             return true;
         }
 
@@ -184,7 +184,7 @@ public abstract class ShipFixerCommandBase : CommandModule
             return false;
         }
 
-        Confirmations[confirmationKey] = now.AddSeconds(Plugin.Instance.Config.ShipFixerConfirmationInSeconds);
+        ShipFixerConfirmations[confirmationKey] = now.AddSeconds(Plugin.Instance.Config.ShipFixerConfirmationInSeconds);
         Context.Respond($"Are you sure you want to continue? Enter the command again within {Plugin.Instance.Config.ShipFixerConfirmationInSeconds} seconds to confirm fixship on {groups[0].DisplayName}.");
         return false;
     }
@@ -205,7 +205,7 @@ public abstract class ShipFixerCommandBase : CommandModule
     private void StartCommandCooldown(string callerKey)
         => CommandCooldowns[callerKey] = DateTime.UtcNow.AddSeconds(Plugin.Instance.Config.ShipFixerCooldownInSeconds);
 
-    private string PlayerKey()
+    private string ShipFixerPlayerKey()
     {
         if (Context.Caller.SteamId != 0)
             return Context.Caller.SteamId.ToString();
@@ -248,29 +248,20 @@ public abstract class ShipFixerCommandBase : CommandModule
     }
 }
 
-[CommandRoot("fixship", "Ship Fixer", "Cut and paste a ship to repair grid bugs.")]
-public sealed class FixShipCommand : ShipFixerCommandBase
+public sealed partial class EssentialsModule
 {
-    [Command("", "Cuts and pastes a ship you are looking at or with the given name.")]
+    [Command("fixship", "Cuts and pastes a ship you are looking at or with the given name.")]
     [Permission(MyPromoteLevel.None)]
-    public void Run(string gridName = null)
+    public void FixShip(string gridName = null)
         => FixShipPlayer(gridName);
-}
 
-[CommandRoot("fixshipmod", "Ship Fixer", "Moderator ship fixer command.")]
-public sealed class FixShipModCommand : ShipFixerCommandBase
-{
-    [Command("", "Cuts and pastes a ship by look target or grid name.")]
+    [Command("fixshipmod", "Cuts and pastes a ship by look target or grid name.")]
     [Permission(MyPromoteLevel.Moderator)]
-    public void Run(string gridName = null)
+    public void FixShipMod(string gridName = null)
         => FixShipModeratorByLookOrName(gridName);
-}
 
-[CommandRoot("fixshipmodid", "Ship Fixer", "Moderator ship fixer by entity id.")]
-public sealed class FixShipModIdCommand : ShipFixerCommandBase
-{
-    [Command("", "Cuts and pastes a ship by entity id.")]
+    [Command("fixshipmodid", "Cuts and pastes a ship by entity id.")]
     [Permission(MyPromoteLevel.Moderator)]
-    public void Run(long gridId = 0)
+    public void FixShipModId(long gridId = 0)
         => FixShipModeratorById(gridId);
 }

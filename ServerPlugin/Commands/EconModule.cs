@@ -8,10 +8,9 @@ using VRage.Game.ModAPI;
 
 namespace ServerPlugin.Commands;
 
-[CommandRoot("econ", "Economy", "Economy and credit commands")]
-public sealed class EconModule : CommandModule
+public sealed partial class EssentialsModule
 {
-    [Command("give", "Add credits to a player's account. Use '*' to affect all players.")]
+    [Command("econ give", "Add credits to a player's account. Use '*' to affect all players.")]
     [Permission(MyPromoteLevel.Admin)]
     public void Give(string player, long amount, bool onlyOnline = false, bool excludeNpcs = true)
     {
@@ -31,7 +30,7 @@ public sealed class EconModule : CommandModule
         Context.Respond($"{amount:#,##0} credits given to {changedIdentities:#,##0} account(s)");
     }
 
-    [Command("take", "Take credits from a player's account. Use '*' to affect all players.")]
+    [Command("econ take", "Take credits from a player's account. Use '*' to affect all players.")]
     [Permission(MyPromoteLevel.Admin)]
     public void Take(string player, long amount, bool onlyOnline = false, bool excludeNpcs = true)
     {
@@ -51,7 +50,7 @@ public sealed class EconModule : CommandModule
         Context.Respond($"{amount:#,##0} credits taken from {changedIdentities:#,##0} account(s)");
     }
 
-    [Command("set", "Set a player's account balance. Use '*' to affect all players.")]
+    [Command("econ set", "Set a player's account balance. Use '*' to affect all players.")]
     [Permission(MyPromoteLevel.Admin)]
     public void Set(string player, long amount, bool onlyOnline = false, bool excludeNpcs = true)
     {
@@ -72,12 +71,12 @@ public sealed class EconModule : CommandModule
         Context.Respond($"Balance(s) set to {amount:#,##0} on {changedIdentities:#,##0} accounts");
     }
 
-    [Command("reset", "Reset credits in a player's account to 10,000. Use '*' to affect all players.")]
+    [Command("econ reset", "Reset credits in a player's account to 10,000. Use '*' to affect all players.")]
     [Permission(MyPromoteLevel.Admin)]
     public void Reset(string player, bool onlyOnline = false, bool excludeNpcs = true)
         => Set(player, 10_000, onlyOnline, excludeNpcs);
 
-    [Command("top", "Return player balances sorted highest to lowest.")]
+    [Command("econ top", "Return player balances sorted highest to lowest.")]
     [Permission(MyPromoteLevel.None)]
     public string Top(bool onlyOnline = false, bool excludeNpcs = true)
     {
@@ -100,7 +99,7 @@ public sealed class EconModule : CommandModule
         return data.ToString();
     }
 
-    [Command("check", "Check a player's balance.")]
+    [Command("econ check", "Check a player's balance.")]
     [Permission(MyPromoteLevel.None)]
     public string Check(string player)
     {
@@ -112,7 +111,7 @@ public sealed class EconModule : CommandModule
         return $"{identity.DisplayName}'s balance is {balance:#,##0} credits";
     }
 
-    [Command("pay", "Pay another online player from your account.")]
+    [Command("econ pay", "Pay another online player from your account.")]
     [Permission(MyPromoteLevel.None)]
     public string Pay(string player, long amount)
     {

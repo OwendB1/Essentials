@@ -12,15 +12,14 @@ using VRage.Groups;
 
 namespace ServerPlugin.Commands;
 
-[CommandRoot("pcu", "PCU Tools", "PCU ownership and authorship tools")]
-public sealed class PcuCheckModule : CommandModule
+public sealed partial class EssentialsModule
 {
-    [Command("checkowner", "Checks block ownership on a grid.")]
+    [Command("pcu checkowner", "Checks block ownership on a grid.")]
     [Permission(MyPromoteLevel.Moderator)]
     public string CheckOwner(string gridName = null)
         => CheckGrid(gridName, showAuthors: false);
 
-    [Command("checkauthor", "Checks PCU authorship on a grid.")]
+    [Command("pcu checkauthor", "Checks PCU authorship on a grid.")]
     [Permission(MyPromoteLevel.Moderator)]
     public string CheckAuthor(string gridName = null)
         => CheckGrid(gridName, showAuthors: true);
@@ -37,7 +36,7 @@ public sealed class PcuCheckModule : CommandModule
         {
             MyPlayer player = Utilities.GetPlayerByIdentityId(Context.Caller.IdentityId);
             if (player?.Character is not MyCharacter character)
-                return $"Console has no Character so cannot use this command. Use !pcu {(showAuthors ? "checkauthor" : "checkowner")} <gridname> instead!";
+                return $"Console has no Character so cannot use this command. Use !ess pcu {(showAuthors ? "checkauthor" : "checkowner")} <gridname> instead!";
 
             groups = GridGroupFinder.FindLookAtGridGroup(character);
         }
